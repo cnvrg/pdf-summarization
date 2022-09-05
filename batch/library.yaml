@@ -1,0 +1,37 @@
+---
+title: PDF Summarization Batch
+version: 1.0.0 
+description: Batch blueprint to run on pdfs in a directory to get their summaries. 
+icon: python 
+
+author: "cnvrg"
+author_email: "libhub@cnvrg.io"
+
+
+tags:
+  - training
+
+command: python3 batch_blueprint.py
+
+requirements:
+  cpu: 3.5
+  memory: 8
+  gpu: 0
+  hpu: 0
+
+image: cnvrg/cnvrg:v5.0
+
+language: python3
+
+arguments:
+  - key: pagewise
+    type: 'categorical'
+    values:
+        - 'False'
+  - key: dir
+    type: 'categorical'
+    values:
+        - '/input/s3_connector/ocr_data'
+
+    
+
