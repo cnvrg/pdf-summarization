@@ -84,7 +84,6 @@ def main():
             print(traceback.format_exc())
             continue
         try:
-            print(cnvrg_workdir + "/" + pdfname[:-4] + ".json")
             with open(cnvrg_workdir + "/" + pdfname[:-4] + ".json", "w") as outfile:
                 json.dump(summaries, outfile)
         except Exception:

@@ -33,7 +33,7 @@ def breakup(input_text):
     Args:
         - A single string
     Returns:
-    
+
         - A list of strings each of which has length less than the limit set after conversion into tokens."""
 
     # add full stop at the end of the text if not already present to mark end
@@ -106,7 +106,7 @@ def summarize(data, pagewise):
         to_return = {}
         for i, to_summarize in enumerate(data.values()):
             print("Running summarizer for page number: ", i + 1)
-            to_return[i] = run_model(to_summarize)
+            to_return[i+1] = run_model(to_summarize)
         return to_return
     else:
         to_summarize = " ".join(data.values())

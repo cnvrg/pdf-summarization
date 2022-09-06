@@ -24,7 +24,7 @@ image: cnvrg/cnvrg:v5.0
 language: python3
 
 arguments:
-  - key: pagewise
+  - key: page_wise
     type: 'categorical'
     values:
         - 'False'

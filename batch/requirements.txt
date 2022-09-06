@@ -16,4 +16,4 @@ tqdm>=4.30.0
 rapidfuzz>=1.6.0
 huggingface-hub>=0.4.0
 PyPDF2==2.10.2
-transformers
+transformers==4.18.0

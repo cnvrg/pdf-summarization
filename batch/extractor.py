@@ -58,7 +58,7 @@ def _process_file_ocr(file_path, todo, output):
     export = out.export()
 
     for page, pagenumber in zip(export["pages"], todo):
-        output[pagenumber] = stitch(page)
+        output[pagenumber+1] = stitch(page)
     return output
 
 
