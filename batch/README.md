@@ -30,7 +30,7 @@ cnvrg run  --datasets='[{id:"pdfs",commit:"af3e133428b9e25c55bc59fe534248e6a0c0f
 ```
 {
 
-1 :
+0 :
     {
         "Summary for the entire pdf"
     }
@@ -42,13 +42,13 @@ cnvrg run  --datasets='[{id:"pdfs",commit:"af3e133428b9e25c55bc59fe534248e6a0c0f
 ```
 {
 
-1 :     {
+0 :     {
     
-            "Summary of page one"
+            "Summary of page 1"
         }
 
-2 :     {
-            "Summary of page two"
+1 :     {
+            "Summary of page 2"
         }
 }
 

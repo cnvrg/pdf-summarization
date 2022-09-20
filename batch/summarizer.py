@@ -4,20 +4,10 @@ from transformers import BigBirdPegasusForConditionalGeneration, AutoTokenizer
 print("Loading Summarizer model")
 tokenizer = AutoTokenizer.from_pretrained("google/bigbird-pegasus-large-pubmed")
 
+#feed input list in a single go
 # by default encoder-attention is `block_sparse` with num_random_blocks=3, block_size=64
 model = BigBirdPegasusForConditionalGeneration.from_pretrained(
     "google/bigbird-pegasus-large-pubmed"
-)
-
-# decoder attention type can't be changed & will be "original_full"
-# you can change `attention_type` (encoder only) to full attention like this:
-model = BigBirdPegasusForConditionalGeneration.from_pretrained(
-    "google/bigbird-pegasus-large-pubmed", attention_type="original_full"
-)
-
-# you can change `block_size` & `num_random_blocks` like this:
-model = BigBirdPegasusForConditionalGeneration.from_pretrained(
-    "google/bigbird-pegasus-large-pubmed", block_size=16, num_random_blocks=2
 )
 
 limit = 4096

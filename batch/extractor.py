@@ -5,8 +5,6 @@ os.environ["USE_TORCH"] = "1"
 import torch
 from doctr.io import DocumentFile
 from doctr.models import ocr_predictor
-import logging
-import numpy as np
 from operator import itemgetter
 
 if torch.cuda.is_available():
@@ -58,7 +56,7 @@ def _process_file_ocr(file_path, todo, output):
     export = out.export()
 
     for page, pagenumber in zip(export["pages"], todo):
-        output[pagenumber+1] = stitch(page)
+        output[pagenumber] = stitch(page)
     return output
 
 
