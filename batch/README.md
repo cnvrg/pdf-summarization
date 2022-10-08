@@ -1,16 +1,23 @@
 # PDF Text Summarization Batch
 
-This blueprint can be used to extract text from pdfs in a given directory and summarize the text. The summaries can be created pagewise or for the entire pdf. Results are saved in json files, each json file will have the same name as that of the pdf file. For example: `test.pdf` will have a corresponding `test.json` in the output artifacts. We use a combination of ocr and pdf processing techniques to extract the text from pdfs in the most accurate way possible before summarizing it. The summaries are generated using `BigBird` model architecture capable of working with much longer text and much lesser computing.
+This blueprint can be used to extract text from pdfs in a given directory and summarize the text. The summaries can be created pagewise or for the entire pdf. Results are saved in  a json file. We use a combination of ocr and pdf processing techniques to extract the text from pdfs in the most accurate way possible before summarizing it. The summaries are generated using `BigBird` model architecture capable of working with much longer text and much lesser computing. Supported document types are:
+
+- .pdf
+- .doc
+- .docx
+- .txt
 
 ## Features
 
-- Provide the directory path to the batch library containing all pdf files you want to run the summarizer model on.
+- Provide the directory path to the batch library containing all files you want to run the summarizer model on.
 - You can choose to have your data in s3 bucket or create a cnvrg dataset. 
 
 ## Arguments
 
 - `--dir` : Directory path containing all the pdf files that you want to process.
 - `--page_wise` : A flag taking `True` or `False` as input. Set True if you want summaries created per page for each pdf. Set False if you want summaries created for the entire pdfs.
+
+*Please not that for .txt, .doc and .docx files the page_wise flag does not work and summarization is done for the entire text considering all text to be part of one page*
 
 ## How to run
 ```
@@ -29,10 +36,21 @@ cnvrg run  --datasets='[{id:"pdfs",commit:"af3e133428b9e25c55bc59fe534248e6a0c0f
 
 ```
 {
-
-0 :
+    "file1.pdf":
     {
-        "Summary for the entire pdf"
+
+        0 :
+            {
+                "Summary for the entire pdf"
+            }
+    }
+    "file2.docx"
+    {
+
+        0 :
+            {
+                "Summary for the entire docx"
+            }
     }
 }
 ```
@@ -41,15 +59,28 @@ cnvrg run  --datasets='[{id:"pdfs",commit:"af3e133428b9e25c55bc59fe534248e6a0c0f
 
 ```
 {
+    "file1.pdf":
+    {
+    0 :     {
+        
+                "Summary of page 1"
+            }
 
-0 :     {
-    
-            "Summary of page 1"
-        }
+    1 :     {
+                "Summary of page 2"
+            }
+    }
+    "file2.docx":
+    {
+    0 :     {
+        
+                "Summary of page 1"
+            }
 
-1 :     {
-            "Summary of page 2"
-        }
+    1 :     {
+                "Summary of page 2"
+            }
+    }
 }
 
 ```

@@ -1,4 +1,4 @@
-from extractor import extract
+from extractor import master_extractor
 from summarizer import summarize
 import os
 import argparse
@@ -24,7 +24,6 @@ def argument_parser():
         dest="page_wise",
         default=False,
         required=False,
-        type=bool,
         help="""Whether you want page wise summary of the pdfs""",
     )
     return parser.parse_args()
@@ -48,52 +47,54 @@ def main():
     args = argument_parser()
     direc = args.dir
     page_wise = args.page_wise
-
+    if(page_wise=="true" or page_wise=="True"):
+        page_wise = True
+    
     # check if the path provided is a valid directory
     validation(args)
-    allpdfs = []
+    allfiles = []
     # traverse the directory to get list of all files that end with .pdf
-    for pdfname in os.listdir(direc):
-        if pdfname.endswith(".pdf"):
-            allpdfs.append(pdfname)
+    for filename in os.listdir(direc):
+        if filename.endswith(".pdf") or filename.endswith(".docx") or filename.endswith(".doc") or filename.endswith(".txt"):
+            allfiles.append(filename)
 
-    assert len(allpdfs) != 0, "There are no pdf files located in the given directory"
-
-    for pdfname in allpdfs:
+    assert len(allfiles) != 0, "There are no valid files located in the given directory"
+    finaljson = {}
+    for filename in allfiles:
         try:
-            files = os.path.join(direc, pdfname)
-            print("extracting text from :", pdfname)
-            text = extract(files)
+            files = os.path.join(direc, filename)
+            print("extracting text from :", filename)
+            text = master_extractor(files)
+            if(text is None):
+                continue
         except Exception:
             print(
                 "While extracting text from pdf: ",
-                pdfname,
+                filename,
                 " following error occurred",
             )
             print(traceback.format_exc())
             continue
         try:
-            print("summarizing text from :", pdfname)
+            print("summarizing text from :", filename)
             summaries = summarize(text, page_wise)
+            finaljson[filename] = summaries
         except Exception:
             print(
                 "While summarizing text from pdf: ",
-                pdfname,
+                filename,
                 " following error occurred",
             )
             print(traceback.format_exc())
             continue
-        try:
-            with open(cnvrg_workdir + "/" + pdfname[:-4] + ".json", "w") as outfile:
-                json.dump(summaries, outfile)
-        except Exception:
-            print(
-                "While writing summary as output from pdf: ",
-                pdfname,
-                " following error occurred",
+    try:
+        with open(cnvrg_workdir + "/" + "results.json", "w") as outfile:
+            json.dump(finaljson, outfile)
+    except Exception:
+        print(
+                "While writing summary as output following error occurred",
             )
-            print(traceback.format_exc())
-            continue
+        print(traceback.format_exc())
 
 
 if __name__ == "__main__":

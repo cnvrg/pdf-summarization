@@ -96,11 +96,11 @@ def summarize(data, pagewise):
         to_return = {}
         for i, to_summarize in enumerate(data.values()):
             print("Running summarizer for page number: ", i + 1)
-            to_return[i+1] = run_model(to_summarize)
+            to_return[i] = run_model(to_summarize)
         return to_return
     else:
         to_summarize = " ".join(data.values())
         chunks = breakup(to_summarize)
         print("Running Summarizer for the entire text in pdf")
         all_summaries = [run_model(chunk) for chunk in chunks]
-        return {1: " ".join(all_summaries)}
+        return {0: " ".join(all_summaries)}

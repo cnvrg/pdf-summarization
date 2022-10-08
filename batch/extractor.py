@@ -5,7 +5,10 @@ os.environ["USE_TORCH"] = "1"
 import torch
 from doctr.io import DocumentFile
 from doctr.models import ocr_predictor
+import logging
+import numpy as np
 from operator import itemgetter
+import textract
 
 if torch.cuda.is_available():
     predictor = ocr_predictor(pretrained=True).cuda()
@@ -86,7 +89,7 @@ def _process_file_pdf(file_path):
     return output
 
 
-def extract(filename):
+def extract_pdf(filepath):
     """
     This function takes pdf filepath as input and extracts text from that pdf.
     It extracts text from each page where possible and for pages from which extracted
@@ -99,7 +102,7 @@ def extract(filename):
         - A dictionary containing extracted text from pdf with keys 
           representing each page and values representing text from each page.
     """
-    output = _process_file_pdf(filename)
+    output = _process_file_pdf(filepath)
 
     todoocr = []
 
@@ -109,6 +112,47 @@ def extract(filename):
 
     if len(todoocr) != 0:
         print("running ocr for page numbers: ", todoocr)
-        output = _process_file_ocr(filename, todoocr, output)
+        output = _process_file_ocr(filepath, todoocr, output)
 
     return output
+
+
+def extract_txt(filepath):
+    """
+    The function filepath as input and returs raw text as output
+    Args: 
+        - Filepath
+    Return:
+        - Raw Text
+    """
+    with open(filepath, 'r') as file:
+        output = file.read().replace('\n', '')
+    return output
+
+
+def extract_doc_docx(filepath):
+    """
+    The function filepath as input and returs raw text as output
+    Args: 
+        - Filepath
+    Return:
+        - Raw Text
+    """
+    text = textract.process(filepath)
+    output = text.decode("utf-8") 
+    return output
+
+
+def master_extractor(filepath):
+    if(filepath.endswith(".pdf")):
+        text = extract_pdf(filepath)    
+    elif(filepath.endswith(".txt")):
+        text = extract_txt(filepath)
+        text = {0: text}
+    elif(filepath.endswith(".docx") or filepath.endswith(".doc")):
+        text = extract_doc_docx(filepath)
+        text = {0: text}
+    else:
+        print(filepath, " is not a supported file type")
+        return None
+    return text

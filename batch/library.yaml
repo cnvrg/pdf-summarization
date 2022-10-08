@@ -1,7 +1,7 @@
 ---
-title: PDF Summarization Batch
+title: Document Summarization Batch
 version: 1.0.0 
-description: Batch blueprint to run on pdfs in a directory to get their summaries. 
+description: Batch blueprint to run on documents in a directory to get their summaries. 
 icon: python 
 
 author: "cnvrg"
@@ -31,7 +31,7 @@ arguments:
   - key: dir
     type: 'categorical'
     values:
-        - '/input/s3_connector/ocr_data'
+        - '/input/s3_connector/text_summarization_data'
 
     
 

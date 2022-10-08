@@ -1,8 +1,8 @@
 ---
-title: pdf Summarization Batch
+title: Document Summarization Batch
 version: 1.0.0 
-description: Batch blueprint for text summarization pdfs. 
-long_description: Blueprint to run text summarization on all pdfs in a given directory 
+description: Batch blueprint for text summarization on documents. 
+long_description: Blueprint to run text summarization on all documents in a given directory 
 
 author: "cnvrg"
 author_email: "libhub@cnvrg.io"
@@ -54,14 +54,14 @@ tasks:
       - key: prefix
         type: 'categorical'
         values:
-          - 'ocr_data/'
+          - 'text_summarization_data/'
   - title: Batch
     top: 500
     left: 100
 
     type: exec
 
-    library: pdf-summarization-batch
+    library: document-summarization-batch
     library_version: 1.0.0
 
     command: python3 batch_predict.py
@@ -83,7 +83,7 @@ tasks:
       - key: dir
         type: 'categorical'
         values:
-          - '/data/pdfs'
+          - '/input/s3_connector/text_summarization_data'
 
 relations:
     - from: S3 Connector
