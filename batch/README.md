@@ -1,6 +1,6 @@
-# PDF Text Summarization Batch
+# Text Summarization Batch
 
-This blueprint can be used to extract text from pdfs in a given directory and summarize the text. The summaries can be created pagewise or for the entire pdf. Results are saved in  a json file. We use a combination of ocr and pdf processing techniques to extract the text from pdfs in the most accurate way possible before summarizing it. The summaries are generated using `BigBird` model architecture capable of working with much longer text and much lesser computing. Supported document types are:
+This blueprint can be used to extract text from documents in a given directory and summarize the text. The summaries can be created pagewise or for the entire pdf. Results are saved in  a json file. We use a combination of ocr and pdf processing techniques to extract the text from pdfs in the most accurate way possible before summarizing it. The summaries are generated using `BigBird` model architecture capable of working with much longer text and much lesser computing. Supported document types are:
 
 - .pdf
 - .doc
