@@ -49,6 +49,8 @@ def main():
     page_wise = args.page_wise
     if(page_wise=="true" or page_wise=="True"):
         page_wise = True
+    else:
+        page_wise = False
     
     # check if the path provided is a valid directory
     validation(args)
