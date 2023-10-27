@@ -1,8 +1,8 @@
 ---
 title: Document Summarization Batch
 version: 1.0.0 
-description: Batch blueprint for text summarization on documents. 
-long_description: Blueprint to run text summarization on all documents in a given directory 
+description: Run in batch mode a pretrained model that extracts and summarizes the text from documents 
+long_description: Run in batch mode a pretrained model that extracts and summarizes the text from documents in a directory and saves the results in a JSON file. The summaries can be created page-wise or for the entire document.
 
 author: "cnvrg"
 author_email: "libhub@cnvrg.io"
